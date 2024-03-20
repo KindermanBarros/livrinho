@@ -2,14 +2,14 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./globalStyles";
 import reportWebVitals from "./reportWebVitals";
-import Home from "./pages/home/home";
+import AppRouter from "./routes/router";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Home />
+    <AppRouter />
   </React.StrictMode>
 );
 

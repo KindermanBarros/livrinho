@@ -1,13 +1,16 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "../pages/home/home";
 
 const AppRouter: React.FC = () => {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home />}>
+          <Route index element={<Home />} />
+          (Todo: Create Routes for the app) (Route path="blogs" element=)
+        </Route>
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 };
 

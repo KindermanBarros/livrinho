@@ -1,13 +1,13 @@
 import Header from "../../shared/components/header";
-import Footer from "../../shared/components/footer";
+import NavBar from "../../shared/components/navbar";
+import { Box } from "@mui/material";
 
-function Home() {
+export default function Home() {
   return (
-    <div>
+    <Box>
       <Header />
-      <Footer title="A" />
-    </div>
+      (Todo: Create Logic for Home Page)
+      <NavBar />
+    </Box>
   );
 }
-
-export default Home;
