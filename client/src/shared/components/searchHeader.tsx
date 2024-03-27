@@ -1,15 +1,55 @@
-import { Drawer, TextField, Toolbar } from '@mui/material';
+import {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useEffect,
+  useState,
+} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSearchTerm } from '../../redux/searchTermSlice';
+import { setSearchTerm, fetchBooksThunk } from '../../redux/searchTermSlice';
 import { AppDispatch, RootState } from '../../redux/store';
+import { Toolbar, Drawer, TextField } from '@mui/material';
 
 interface SearchHeaderProps {
   isVisible: boolean;
 }
 
-const SearchHeader: React.FC<SearchHeaderProps> = ({ isVisible }) => {
+const SearchHeader = forwardRef((props: SearchHeaderProps, ref) => {
+  const { isVisible } = props;
   const dispatch = useDispatch<AppDispatch>();
   const searchTerm = useSelector((state: RootState) => state.searchTerm.value);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
+
+  useEffect(() => {
+    const timerId = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 500);
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [searchTerm]);
+
+  useEffect(() => {
+    if (debouncedSearchTerm) {
+      dispatch(fetchBooksThunk(debouncedSearchTerm));
+    }
+  }, [debouncedSearchTerm, dispatch]);
+
+  useEffect(() => {
+    if (isVisible && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isVisible]);
+
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    },
+  }));
 
   if (!isVisible) {
     return null;
@@ -40,6 +80,7 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({ isVisible }) => {
           variant="outlined"
           value={searchTerm}
           onChange={(e) => dispatch(setSearchTerm(e.target.value))}
+          inputRef={inputRef}
           sx={{
             transition: '0.3s',
             width: '90%',
@@ -66,6 +107,6 @@ const SearchHeader: React.FC<SearchHeaderProps> = ({ isVisible }) => {
       </Toolbar>
     </Drawer>
   );
-};
+});
 
 export default SearchHeader;
