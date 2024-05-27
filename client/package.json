@@ -1,9 +1,9 @@
 {
-  "name": "client",
+  "name": "livrinho",
   "version": "0.1.0",
   "author": "Mania",
   "private": true,
-  "proxy": "100.26.61.130:3001",
+  "proxy": "http://100.26.61.130:3001",
   "dependencies": {
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
