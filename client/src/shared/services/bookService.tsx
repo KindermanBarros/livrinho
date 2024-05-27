@@ -2,7 +2,7 @@ import BookData from '../interfaces/bookData';
 
 export async function fetchBooks(searchTerm: string): Promise<BookData[]> {
   try {
-    const response = await fetch('/key');
+    const response = await fetch('http://100.26.61.130:3001/key');
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

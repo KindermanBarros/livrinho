@@ -2,15 +2,19 @@ import express, { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import * as trpcExpress from '@trpc/server/adapters/express';
 import { appRouter } from './router';
+import cors from 'cors'
 
 dotenv.config();
 
 const app = express();
 
+app.use(cors({origin:['https://main.d3h5skblfcr1h9.amplifyapp.com/']}));
 app.use(express.json());
 
 const port = process.env.PORT || 3001;
 const googleApiKey = process.env.GOOGLE_API_KEY;
+
+
 
 if (!googleApiKey) {
   console.error('Environment variable GOOGLE_API_KEY must be set.');
