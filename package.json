@@ -6,7 +6,10 @@
     "scripts": {
         "start:client": "npm --workspace client start",
         "start:server": "npm --workspace server start",
-        "start": "concurrently \"npm run start:client\" \"npm run start:server\""
+        "start": "concurrently \"npm run start:client\" \"npm run start:server\"",
+        "build:client": "npm --workspace client run build",
+        "build:server": "npm --workspace server run build",
+        "build": "npm run build:client && npm run build:server"
     },
     "devDependencies": {
         "concurrently": "^7.0.0"
