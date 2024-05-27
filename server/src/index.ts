@@ -2,7 +2,7 @@ import express, { Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import * as trpcExpress from '@trpc/server/adapters/express';
 import { appRouter } from './router';
-import cors from 'cors'
+import cors from 'cors';
 
 dotenv.config();
 
@@ -13,17 +13,16 @@ app.use(express.json());
 const port = process.env.PORT || 3001;
 const googleApiKey = process.env.GOOGLE_API_KEY;
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  next();
-})
-
 if (!googleApiKey) {
   console.error('Environment variable GOOGLE_API_KEY must be set.');
   process.exit(1);
 }
+
+app.use(cors({
+  origin: '*',
+  methods: ['POST', 'GET', 'PUT'],
+  allowedHeaders: ['Content-Type']
+}));
 
 app.use((req: Request, res: Response, next: NextFunction) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.originalUrl}`);
@@ -45,7 +44,6 @@ app.use(
     createContext,
   }),
 );
-//help
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
